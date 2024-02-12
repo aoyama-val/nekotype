@@ -1,3 +1,10 @@
+# nekotype
+
+猫のタイピングゲーム
+
+![nekotype](https://github.com/aoyama-val/nekotype/assets/13144822/61aea734-f700-4ede-ad42-dff67cfc8766)
+
+
 BGM
 http://www.paw.hi-ho.ne.jp/tanatin/kenkyuusitu/mario/mario-field.mid
 
