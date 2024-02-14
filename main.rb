@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
 require 'sdl'
-require 'word'
-require 'sound'
-require 'getopts'
+require_relative 'word'
+require_relative 'sound'
 
 
 class Game
@@ -240,6 +240,8 @@ class Game
 	end
 
 	def draw()
+    time = (TIMELIMIT - @gameFrame - 1) / FPS + 1
+
 		case @state
 		when :title
 			@screen.fillRect(0, 0, SCREEN_X, SCREEN_Y,0)
@@ -260,7 +262,7 @@ class Game
 			@scoreDrawer.draw(true)
 
 			
-			drawTime(time = (TIMELIMIT - @gameFrame - 1) / FPS + 1)
+			drawTime(time)
 			
 			@screen.flip
 
@@ -319,9 +321,14 @@ class Game
 					return nil #exit
 				end
 
-				key = event.sym
-				@keys.push(key)
-
+        begin
+          # Ruby/SDL1ではevent.symが文字列だったが、2では変わっているようだ
+          key = event.sym.to_i.chr
+          p key
+          @keys.push(key)
+        rescue RangeError
+          puts "RangeError"
+        end
 			end
 		end
 		return true
@@ -387,8 +394,8 @@ class Game
 	end
 
 	def parseArgs
-		getopts("fh", "help")
-		if $OPT_help || $OPT_h
+    opts = ARGV.getopts("fh", "help")
+		if opts["help"] || opts["h"]
 			puts TITLE
 			puts "usage: ruby main.rb [options]"
 			puts "options:"
@@ -397,7 +404,7 @@ class Game
 			exit
 		end
 
-		if $OPT_f
+		if opts["f"]
 			@@isFullscreen = true
 		end
 	end

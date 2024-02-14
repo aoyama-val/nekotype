@@ -1,4 +1,4 @@
-require 'gameobj'
+require_relative 'gameobj'
 
 class Word < GameObj
 	DIE_COUNT_MAX =25
@@ -135,9 +135,9 @@ class Word < GameObj
 
 	# 1キーが合っているかどうか試す
 	def tryKey(key, game)
-		#puts "tryKey " + key.to_s + " " + @word[@matchedLength].to_s
+    #puts "word: #{@word} tryKey " + key.to_i.chr + " " + @word[@matchedLength].to_s + " matchedLength: #{@matchedLength}"
 
-		if key == @word[@matchedLength]
+    if key == @word[@matchedLength]
 			# カレントターゲットにする
 			$game.setCurrentWord(self)
 
